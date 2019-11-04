@@ -1,0 +1,29 @@
+<div class="layui-side-scroll">
+    <div class="layui-logo" lay-href="{:url('index/console')}">
+        <span>后台管理系统</span>
+    </div>
+    <ul class="layui-nav layui-nav-tree" lay-shrink="all" id="LAY-system-side-menu"
+        lay-filter="layadmin-system-side-menu">
+        {foreach $ld_arr as $k=>$v}
+        <li data-name="user" class="layui-nav-item">
+            <a href="{empty name='v.ca_path'}javascript:;{else/}{:url($v.ca_path)}{/empty}"
+               lay-tips="{$v.name}" lay-direction="2">
+                <i class="layui-icon {$v.icon}"></i>
+                <cite>{$v.name}</cite>
+            </a>
+            {notempty name='v.child'}
+            <dl class="layui-nav-child">
+                {foreach $v.child as $k1=>$v1}
+                <dd>
+                    <a lay-href="{:url($v1.ca_path)}">
+                        <i class="layui-icon {$v1.icon}"></i>
+                        <cite>{$v1.name}</cite>
+                    </a>
+                </dd>
+                {/foreach}
+            </dl>
+            {/notempty}
+        </li>
+        {/foreach}
+    </ul>
+</div>

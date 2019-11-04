@@ -1,0 +1,104 @@
+{extend name="public/base" /}
+{block name="content"}
+<div class="layui-form" id="layuiadmin-form-admin" style="padding: 20px 30px 0 0;">
+    <div class="layui-form-item">
+        <label class="layui-form-label">显示序号</label>
+        <div class="layui-input-inline">
+            <input type="number" name="show_order" autocomplete="off" lay-verify="required|number" placeholder="请输入显示序号" min="0"
+                   value="{empty name='info.show_order'} {$showor} {else /} {$info.show_order} {/empty}" autocomplete="off" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">隶属类型</label>
+        <div class="layui-input-block">
+            <select name="pid">
+                <option value="0">---一级权限---</option>
+                {foreach $up_per as $k=>$vo}
+                <option {eq name="info.pid" value="$vo.id" }selected{/eq} value="{$vo.id}">{$vo.name}</option>
+                {/foreach}
+            </select>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">权限名称</label>
+        <div class="layui-input-block">
+            <input type="text" name="name" autocomplete="off" lay-verify="permis_name" placeholder="请输入权限名称"
+                   value="{$info.name}" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">控制器名称</label>
+        <div class="layui-input-block">
+            <input type="text" name="con_name" autocomplete="off" placeholder="请输入控制器名称" value="{$info.con_name}"
+                   class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">方法名称</label>
+        <div class="layui-input-block">
+            <input type="text" name="fun_name" autocomplete="off" placeholder="请输入方法名称" value="{$info.fun_name}"
+                   class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">全路径名称</label>
+        <div class="layui-input-block">
+            <input type="text" name="ca_path" autocomplete="off" placeholder="请输入全路径名称" value="{$info.ca_path}"
+                   class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">默认图标</label>
+        <div class="layui-input-inline">
+            <input type="text" name="icon" autocomplete="off" id="icon" placeholder="请输入图标代码" value="{$info.icon}" class="layui-input">
+        </div>
+        <div class="layui-input-inline">
+            <input type="text" id="iconPicker" lay-filter="iconPicker" class="hide">
+        </div>
+    </div>
+    <div class="layui-form-item layui-form-text">
+        <label class="layui-form-label">备注</label>
+        <div class="layui-input-block">
+            <textarea placeholder="请输入备注" name="remarks" class="layui-textarea">{$info.remarks}</textarea>
+        </div>
+    </div>
+    <input type="hidden" name="id" value="{$info.id}">
+    <div class="layui-form-item layui-hide">
+        <input type="button" lay-submit lay-filter="submit" id="submit" value="确认">
+    </div>
+</div>
+{/block}
+{block name="script"}
+<script>
+    layui.config({
+        base: '__STATIC__/lib/extend/'
+    }).extend({
+        iconPicker: 'iconPicker/iconPicker'
+    }).use([ 'form', 'iconPicker'], function () {
+        var $ = layui.$,
+            form = layui.form,
+            iconPicker = layui.iconPicker;
+
+        iconPicker.render({
+            // 选择器，推荐使用input
+            elem: '#iconPicker',
+            // 数据类型：fontClass/unicode，推荐使用fontClass
+            type: 'fontClass',
+            // 是否开启搜索：true/false
+            search: true,
+            // 是否开启分页
+            page: true,
+            // 每页显示数量，默认12
+            limit: 12,
+            // 点击回调
+            click: function (data) {
+                $('#icon').val(data.icon);
+            }
+        });
+
+        //选中图标
+        iconPicker.checkIcon('iconPicker', $('#icon').val());
+
+    })
+</script>
+{/block}
