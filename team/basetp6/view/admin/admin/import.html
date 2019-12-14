@@ -1,0 +1,58 @@
+{extend name="public/main" /}
+{block name="content"}
+<form class="layui-form" lay-filter="layuiadmin-form-admin" id="layuiadmin-form-admin" style="padding: 20px 0 0 0;">
+    <div class="layui-form-item">
+        <label class="layui-form-label">上传Excel</label>
+        <div class="layui-input-block">
+            <div class="layui-upload">
+                <button type="button" class="layui-btn" id="uploadImg">上传Excel</button>
+                <input type="hidden" name="pic" id="uploadImg2" value="" lay-verify="required">
+                <input type="hidden" name="file_name" id="file_name" value="" lay-verify="required">
+                <div class="layui-upload-list">
+                    <p id="uploadImg3"></p>
+                    <p id="uploadImgText"></p>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <div class="layui-form-item layui-hide">
+        <input type="button" lay-submit lay-filter="submit" id="submit" value="确认">
+    </div>
+</form>
+{/block}
+{block name="script"}
+<script>
+    layui.use(['form', 'upload','jquery'], function(){
+        var $ = layui.$,
+            form = layui.form,
+            upload = layui.upload ;
+        var uploadInst=upload.render({
+            elem: '#uploadImg',
+            url: "{:url('api/Upload/uploadFiles')}",
+            accept: 'file',
+            exts: 'xls|xlsx',
+            size: 60,
+            done: function(res){
+                if (res.code==0){
+                    $('#uploadImg2').val(res.data.src);
+                    $('#file_name').val(res.data.name);
+                    $('#uploadImg3').text('上传文件--'+res.data.name);
+                } else {
+                    return layer.msg('上传文件类型为：jpg,png,gif,xls,xlsx,doc,docx，且大小不能超过8M',{icon:2})
+                }
+                //上传成功
+            },
+            error: function(){
+                //演示失败状态，并实现重传
+                var demoText = $('#uploadImgText');
+                demoText.html('<span style="color: #FF5722;">上传失败</span> <a class="layui-btn layui-btn-mini demo-reload">重试</a>');
+                demoText.find('.demo-reload').on('click', function(){
+                    uploadInst.upload();
+                });
+            }
+        });
+
+    })
+</script>
+{/block}

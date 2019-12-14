@@ -1,0 +1,115 @@
+{extend name="Public:base" /}
+{block name="content"}
+<div class="layui-fluid">
+    <div class="layui-card">
+        <div class="layui-card-body">
+            <div class="layui-card-header layui-row">
+                <div class="layui-col-md10">
+                    中心机构信息
+                </div>
+                <div class="layui-col-md2">
+                    <div class="layui-btn-container">
+                        <button class="layui-btn" id="edit">编辑</button>
+                        <!--<button class="layui-btn layui-btn-danger" id="del">删除</button>-->
+                    </div>
+                </div>
+            </div>
+            <div class="layui-card-body">
+                <div class="layui-row layui-col-space15">
+                    <div class="layui-col-md12">
+                        <div class="layui-card">
+                            <div class="layui-card-header">中心机构</div>
+                            <div class="layui-card-body layui-row layui-col-space10">
+                                    <table class="layui-table"  >
+                                    <tr>
+                                        <td>机构名称:</td>
+                                        <td>{$info.name}</td>
+                                        <td>机构代码:</td>
+                                        <td>{$info.code}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>地址:</td>
+                                        <td>{$info.address}</td>
+                                        <td>电子邮件:</td>
+                                        <td>{$info.email}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>电话:</td>
+                                        <td>{$info.phone}</td>
+                                        <td>座机:</td>
+                                        <td>{$info.tel}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>传真:</td>
+                                        <td>{$info.fax}</td>
+                                        <td>备注:</td>
+                                        <td>{$info.remark}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>成员数量:</td>
+                                        <td>{$info.ins_mem_num}</td>
+                                        <td>患者数量:</td>
+                                        <td>{$info.patient_num}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>创建时间:</td>
+                                        <td>{$info.create_time}</td>
+                                        <td>修改时间:</td>
+                                        <td>{$info.update_time}</td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="layui-card">
+                            <div class="layui-card-header">中心机构联系人信息</div>
+                            <div class="layui-card-body layui-row layui-col-space10">
+                                <table class="layui-table">
+                                    <tr>
+                                        <td>姓名:</td>
+                                        <td>{$info.admin}</td>
+                                        <td>国籍:</td>
+                                        <td>{$info.country}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>个人网站:</td>
+                                        <td>{$info.web}</td>
+                                        <td>所属部门:</td>
+                                        <td>{$info.department}</td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <input type="hidden" name="id" id="id" value="{$info.id}">
+    </div>
+</div>
+{/block}
+
+{block name="script"}
+<script>
+    layui.use(['layer','table','form','jquery'],function () {
+        var $ = layui.$;
+        var layer = layui.layer;
+        var form = layui.form;
+        var table = layui.table;
+
+        $('#edit').click(function () {
+            var url = "{:url('/home/institution/add')}?id=" +$('#id').val();
+            layer.open({
+                type: 2,
+                title: '修改机构',
+                area: ['90%', '90%'],
+                fixed: true, //不固定
+                closeBtn: 1,
+                content: [url],
+                end: function () {
+
+                }
+            });
+        });
+    })
+</script>
+{/block}

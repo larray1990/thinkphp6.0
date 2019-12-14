@@ -1,0 +1,148 @@
+{extend name="public/base" /}
+{block name="content"}
+<div class="layui-form" lay-filter="layuiadmin-form-useradmin" id="layuiadmin-form-useradmin" style="padding: 20px 0 0 0;">
+    <div class="layui-row">
+        <div class="layui-col-md6">
+            <div class="layui-form-item">
+                <label class="layui-form-label">语言</label>
+                <div class="layui-input-inline">
+                    <select name="language" lay-verify="required" lay-search="">
+                        <option  value="">请选择语言</option>
+                        <option {eq name="$info.language" value="中文"}selected{/eq}  value="中文">中文</option>
+                        <option {eq name="$info.language" value="英语"}selected{/eq} value="其他">英语</option>
+                    </select>
+                </div>
+            </div>
+            {if $info.id eq ''}
+            <div class="layui-form-item">
+                <label class="layui-form-label">密码</label>
+                <div class="layui-input-inline">
+                    <input type="password" name="password" lay-verify="required" placeholder="请输入密码" autocomplete="off" class="layui-input" value="{$info.password}">
+                </div>
+            </div>
+            {/if}
+            <div class="layui-form-item">
+                <label class="layui-form-label">姓名</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="nick_name" lay-verify="required" placeholder="请输入姓名" autocomplete="off" class="layui-input" value="{$info.nick_name}">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">性别</label>
+                <div class="layui-input-inline">
+                    <input type="radio" name="sex" value="男" title="男" {eq name="$info.sex" value="男"} checked{/eq}>
+                    <input type="radio" name="sex" value="女" title="女" {eq name="$info.sex" value="女"} checked{/eq}>
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">详细描述</label>
+                <div class="layui-input-inline">
+                    <textarea name="desc" placeholder="请输入详细描述" class="layui-textarea">{$info.desc}</textarea>
+                </div>
+            </div>
+        </div>
+        <div class="layui-col-md6">
+
+            <div class="layui-form-item">
+                <label class="layui-form-label">用户名</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="user_name" lay-verify="required" placeholder="请输入用户名" autocomplete="off" class="layui-input" value="{$info.user_name}">
+                </div>
+            </div>
+            {if $info.id eq ''}
+            <div class="layui-form-item">
+                <label class="layui-form-label">确认密码</label>
+                <div class="layui-input-inline">
+                    <input type="password" name="rep_password" lay-verify="required|confirmPass" placeholder="请输入确认密码" autocomplete="off" class="layui-input" value="{$info.rep_password}">
+                </div>
+            </div>
+            {/if}
+            <div class="layui-form-item">
+                <label class="layui-form-label">电子邮件</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="email" lay-verify="email" placeholder="请输入电子邮件" autocomplete="off" class="layui-input" value="{$info.email}">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">电话</label>
+                <div class="layui-input-inline">
+                    <input type="tel" name="phone" lay-verify="required|phone" placeholder="请输入电话" autocomplete="off" class="layui-input" value="{$info.phone}">
+                </div>
+            </div>
+
+            <div class="layui-form-item">
+                <label class="layui-form-label">头衔</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="title" lay-verify="required" placeholder="请输入头衔" autocomplete="off" class="layui-input" value="{$info.title}">
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <input type="hidden" name="id" value="{$info.id}">
+    <div class="layui-form-item layui-layout-admin">
+        <div class="layui-input-block">
+            <div class="layui-footer" style="left: 0;">
+                <button class="layui-btn" lay-submit="" lay-filter="demo1">提交</button>
+                <!--                <button type="reset" href="history.back(-1)" class="layui-btn layui-btn-primary">返回</button>-->
+            </div>
+        </div>
+    </div>
+</div>
+{/block}
+{block name="script"}
+<script>
+    layui.use(['form','jquery','layer'], function () {
+        var $ = layui.$;
+        var form = layui.form;
+        form.verify({
+            confirmPass:function(value){
+                if($('input[name=password]').val() !== value)
+                    return '两次密码输入不一致！';
+            },
+            username: function(value) {
+                $.ajax({
+                    async: false, // 使用同步的方法
+                    data: { //要提交到服务端验证的用户名
+                        userName: value
+                    },
+                    dataType: 'json',
+                    success: function(result) { //栗子，返回的数据结果：{"rel":true,"message":"用户名已存在！"}
+                        if (result.rel) {
+                            return result.message;
+                        }
+                    },
+                    url: 'http://xxx.com/api/' // 这里写你要验证的地址哦。
+                });
+            }
+
+        });
+        //监听提交
+        form.on('submit(demo1)', function (data) {
+            layer.msg(JSON.stringify(data.field));
+            var index = layer.msg('提交中，请稍候', {icon: 16, time: false, shade: 0.8});
+            setTimeout(function () {
+                $.ajax({
+                    type: "post",
+                    url: "{:url('@home/institution/member_info')}",
+                    data: data.field,
+                    success: function (data) {
+                        if (data['code'] == 1) {
+                            layer.msg(data['msg']);
+                            setTimeout(function () {
+                                var index = parent.layer.getFrameIndex(window.name);
+                                parent.layer.close(index);
+                                window.location.reload();
+                            }, 1000);
+                        } else {
+                            layer.msg(data['msg']);
+                        }
+                    }
+                });
+            }, 2000);
+            return false; //阻止表单跳转。如果需要表单跳转，去掉这段即可。
+        });
+    });
+</script>
+{/block}
