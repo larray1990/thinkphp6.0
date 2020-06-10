@@ -1,0 +1,95 @@
+{extend name="../layouts/admin" /}
+{block name="content2"}
+<form class="layui-form" style="padding: 20px 30px 0 0;">
+    <div class="layui-form-item">
+        <label class="layui-form-label">显示序号：</label>
+        <div class="layui-input-inline">
+            <input type="number" name="sort" autocomplete="off" lay-verify="required|number" placeholder="请输入显示序号"
+                min="0" value="{$showor}" autocomplete="off" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">隶属类型：</label>
+        <div class="layui-input-block">
+            <select name="pid" lay-search>
+                <option value="0">---一级权限---</option>
+                {foreach $up_per as $k=>$vo}
+                <option {eq name="info.pid" value="$vo.id" }selected{/eq} value="{$vo.id}">{$vo.title}</option>
+                {/foreach}
+            </select>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">权限名称：</label>
+        <div class="layui-input-block">
+            <input type="text" name="title" autocomplete="off" lay-verify="required" placeholder="请输入权限名称"
+                value="{$info.title}" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">路径名称：</label>
+        <div class="layui-input-block">
+            <input type="text" name="name" autocomplete="off" placeholder="请输入全路径名称" value="{$info.name}"
+                class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">默认图标：</label>
+        <div class="layui-input-inline">
+            <input type="text" name="icon" autocomplete="off" id="icon" placeholder="请输入图标代码" value="{$info.icon}"
+                class="layui-input">
+        </div>
+        <div class="layui-input-inline">
+            <input type="text" id="iconPicker" lay-filter="iconPicker" class="hide">
+        </div>
+    </div>
+    <div class="layui-form-item layui-form-text">
+        <label class="layui-form-label">状态：</label>
+        <div class="layui-input-block">
+            <input type="checkbox" name="status" lay-skin="switch" lay-text="开启|禁用" value="1" {if
+                condition="$info.status== 1" }checked{/if}> </div> </div> <div class="layui-form-item layui-form-text">
+            <label class="layui-form-label">备注：</label>
+            <div class="layui-input-block">
+                <textarea placeholder="请输入备注" name="remarks" class="layui-textarea">{$info.remarks}</textarea>
+            </div>
+        </div>
+        <input type="hidden" name="id" value="{$info.id}">
+        <div class="layui-form-item layui-layer-btn-c">
+            <label class="layui-form-label"></label>
+            <div class="layui-input-block">
+                <button class="layui-btn layui-layer-btn0" lay-submit="" lay-filter="demo">提交</button>
+            </div>
+        </div>
+</form>
+{/block}
+{block name="script"}
+<script>
+    layui.use(['form', 'iconPicker', 'common'], function () {
+        var $ = layui.$,
+            form = layui.form,
+            common = layui.common,
+            iconPicker = layui.iconPicker;
+
+        iconPicker.render({
+            // 选择器，推荐使用input
+            elem: '#iconPicker',
+            // 数据类型：fontClass/unicode，推荐使用fontClass
+            type: 'fontClass',
+            // 是否开启搜索：true/false
+            search: true,
+            // 是否开启分页
+            page: true,
+            // 每页显示数量，默认12
+            limit: 12,
+            // 点击回调
+            click: function (data) {
+                $('#icon').val(data.icon);
+            }
+        });
+        //选中图标
+        iconPicker.checkIcon('iconPicker', $('#icon').val());
+        common.submit('demo', "{:url('permission/form')}");
+
+    })
+</script>
+{/block}

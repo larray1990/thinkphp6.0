@@ -1,0 +1,147 @@
+{extend name="../layouts/admin" /}
+{block name="content2"}
+<form class="layui-form" style="padding: 20px 0 0 0;">
+    <div class="layui-form-item">
+        <label class="layui-form-label">账号：</label>
+        <div class="layui-input-inline">
+            <input type="text" name="username" placeholder="请输入账号" autocomplete="off" lay-verify="required"
+                value="{$info.username}" class="layui-input">
+        </div>
+        <div class="layui-form-mid layui-word-aux"><b style="color: red;">★ </b>必填</div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">密码：</label>
+        <div class="layui-input-inline">
+            <input type="password" name="password" placeholder="请输入密码" value="{$info.password}" lay-verify="required"
+                autocomplete="off" class="layui-input">
+        </div>
+        <div class="layui-form-mid layui-word-aux"><b style="color: red;">★ </b>请输入6~16个字符，区分大小写</div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">姓名：</label>
+        <div class="layui-input-inline">
+            <input type="text" name="fullname" autocomplete="off" lay-verify="required" placeholder="请输入姓名"
+                value="{$info.fullname}" class="layui-input">
+        </div>
+        <div class="layui-form-mid layui-word-aux"><b style="color: red;">★ </b>必填</div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">性别：</label>
+        <div class="layui-input-inline">
+            <input type="radio" name="sex" {eq name="info.sex" value="1" }checked="" {else/}checked=""{/eq} title="男"
+                value="1">
+            <input type="radio" name="sex" {eq name="info.sex" value="2" }checked="" {else/}{/eq} title="女" value="2">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">头像：</label>
+        <div class="layui-input-block">
+            <div class="layui-upload">
+                <button type="button" class="layui-btn" id="uploadImg">上传图片</button>
+                <input type="hidden" name="pic" id="uploadImg2" value="{$info.pic}" lay-verify="required">
+                <div class="layui-upload-list">
+                    <img class="layui-upload-img" id="uploadImg3" src="{$info.pic}" {notempty name="info.pic" } style="height: 260px;" {/notempty} >
+                    <input type="hidden" name="file_name" id="file_name" value="{$info.file_name}">
+                    <p id="uploadImgText"></p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="layui-form-item" id="area-picker">
+        <div class="layui-form-label">选择地区：</div>
+        <div class="layui-input-inline" style="width: 200px;">
+            <select name="province" class="province-selector" data-value="{$info.province}" lay-filter="province-1" lay-search="">
+                <option value="">请选择省</option>
+            </select>
+        </div>
+        <div class="layui-input-inline" style="width: 200px;">
+            <select name="city" class="city-selector" data-value="{$info.city}" lay-filter="city-1" lay-search="">
+                <option value="">请选择市</option>
+            </select>
+        </div>
+        <div class="layui-input-inline" style="width: 200px;">
+            <select name="county" class="county-selector" data-value="{$info.county}" lay-filter="county-1" lay-search="">
+                <option value="">请选择县/区</option>
+            </select>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">手机号码：</label>
+        <div class="layui-input-inline">
+            <input type="text" name="phone" lay-verify="phone|required" autocomplete="off" placeholder="请输入手机号码"
+                value="{$info.phone}" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">电子邮箱：</label>
+        <div class="layui-input-inline">
+            <input type="text" name="email" lay-verify="email|required" autocomplete="off" placeholder="请输入电子邮箱"
+                value="{$info.email}" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">角色类型：</label>
+        <div class="layui-input-inline">
+            <select name="group_id" lay-verify="required" lay-search="">
+                <option value="">--请选择角色--</option>
+                {foreach name="role" item="rl"}
+                <option {eq name="info.group_id" value="$rl.id" }selected{/eq} value="{$rl.id}">{$rl.title}
+                </option>
+                {/foreach}
+            </select>
+        </div>
+    </div>
+    <div class="layui-form-item layui-form-text">
+        <label class="layui-form-label">管理员：</label>
+        <div class="layui-input-block">
+            <input type="checkbox" name="is_admin" lay-skin="switch" lay-text="是|否" value="1" {if
+                condition="$info.is_admin== 1" }checked{/if}> </div> </div> <div
+                class="layui-form-item layui-form-text">
+            <label class="layui-form-label">状态：</label>
+            <div class="layui-input-block">
+                <input type="checkbox" name="status" lay-skin="switch" lay-text="开启|禁用" value="1" {if
+                    condition="$info.status== 1" }checked{/if}> </div> </div> <div
+                    class="layui-form-item layui-form-text">
+                <label class="layui-form-label">备注：</label>
+                <div class="layui-input-block">
+                    <textarea placeholder="请输入备注" name="remarks" lay-verify="content" id="remarks"
+                        class="layui-textarea">{$info.remarks}</textarea>
+                </div>
+            </div>
+            <input type="hidden" name="id" value="{$info.id}">
+            <div class="layui-form-item layui-layer-btn-c">
+                <div class="layui-input-block">
+                    <button class="layui-btn layui-layer-btn0" lay-submit="" lay-filter="demo">提交</button>
+                </div>
+            </div>
+            <!--<div class="layui-form-item layui-layer-btn layui-layer-btn-c">
+        <a class="layui-layer-btn0" lay-filter="demo">确定</a>
+        <a class="layui-layer-btn1">取消</a>
+    </div>-->
+</form>
+{/block}
+{block name="script"}
+<script>
+    layui.use(['form', 'upload', 'element', 'common', 'layarea'], function () {
+        var $ = layui.$,
+            element = layui.element,
+            form = layui.form,
+            common = layui.common,
+            layarea = layui.layarea,
+            upload = layui.upload;
+
+        $('.layui-progress').hide();
+        layarea.render({
+            elem: '#area-picker',
+            // change: function (res) {
+            //     //选择结果
+            //     console.log(res);
+            // }
+        });
+        tinymceInit('remarks', "{:url('uploads/uploadImage')}");
+        common.uploadImage('uploadImg', 'uploadImg2', 'uploadImg3',
+                "{:url('uploads/uploadImage')}?type=images");
+        common.submit('demo', "{:url('admin/form')}", 'remarks');
+    });
+</script>
+{/block}

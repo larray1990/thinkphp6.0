@@ -1,0 +1,35 @@
+{extend name="../layouts/admin" /} {block name="content2"}
+<form class="layui-form" lay-filter="layuiadmin-form-admin" id="layuiadmin-form-admin" style="padding: 20px 0 0 0;">
+    <div class="layui-form-item">
+        <label class="layui-form-label">上传Excel</label>
+        <div class="layui-input-block">
+            <div class="layui-upload">
+                <button type="button" class="layui-btn" id="uploadImg">上传Excel</button>
+                <input type="hidden" name="pic" id="uploadImg2" value="" lay-verify="required">
+                <div class="layui-upload-list">
+                    <p id="uploadImg3"></p>
+                    <p id="uploadImgText"></p>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <div class="layui-form-item layui-layer-btn-c">
+        <label class="layui-form-label"></label>
+        <div class="layui-input-block">
+            <button class="layui-btn layui-layer-btn0" lay-submit="" lay-filter="demo">提交</button>
+        </div>
+    </div>
+</form>
+{/block} {block name="script"}
+<script>
+    layui.use(['form', 'upload', 'jquery', 'common'], function () {
+        var $ = layui.$,
+            form = layui.form,
+            common = layui.common,
+            upload = layui.upload;
+        common.uploadFiles('uploadImg', 'uploadImg2', 'uploadImg3', "{:url('Uploads/uploadFiles')}");
+        common.submit('demo', "{:url('admin/import')}");
+    })
+</script>
+{/block}

@@ -1,0 +1,36 @@
+{extend name="../layouts/admin" /}
+{block name="content"}
+<form class="layui-fluid">
+    <div class="layui-form" style="padding: 20px 30px 0 0;">
+        <div class="layui-form-item">
+            <label class="layui-form-label">角色名称:</label>
+            <div class="layui-input-inline">
+                <input type="text" name="title" lay-verify="required" placeholder="请输入角色名称" autocomplete="off"
+                    class="layui-input" value="{$info.title}">
+            </div>
+        </div>
+        <div class="layui-form-item layui-form-text">
+            <label class="layui-form-label">状态：</label>
+            <div class="layui-input-block">
+                <input type="checkbox" name="status" lay-skin="switch" lay-text="开启|禁用" value="1" {if
+                    condition="$info.status== 1" }checked{/if}> </div> </div> <input type="hidden" name="id"
+                    value="{$info.id}">
+                <div class="layui-form-item layui-layer-btn-c">
+                    <label class="layui-form-label"></label>
+                    <div class="layui-input-block">
+                        <button class="layui-btn layui-layer-btn0" lay-submit="" lay-filter="demo">提交</button>
+                    </div>
+                </div>
+            </div>
+</form>
+{/block}
+{block name="script"}
+<script>
+    layui.use(['form', 'common'], function () {
+        var $ = layui.$,
+            common = layui.common,
+            form = layui.form;
+        common.submit('demo', "{:url('role/form')}");
+    });
+</script>
+{/block}

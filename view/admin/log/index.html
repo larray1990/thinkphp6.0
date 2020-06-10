@@ -1,0 +1,92 @@
+{extend name="../layouts/admin" /} {block name="content2"}
+<fieldset class="layui-elem-field layui-field-title">
+    <legend>{$title}</legend>
+</fieldset>
+<blockquote class="layui-text">
+    <div class="layui-form " lay-filter="dataTableId">
+        <div class="layui-form-item">
+            <div class="layui-input-inline">
+                <input type="text" name="recog" id="recog" placeholder="请输入时间" autocomplete="off" class="layui-input">
+            </div>
+            <div class="layui-input-inline">
+                <input type="text" name="username" id="username" placeholder="请输入管理员" autocomplete="off"
+                    class="layui-input">
+            </div>
+            <div class="layui-inline">
+                <button class="layui-btn" data-type="search">搜索</button>
+                <button class="layui-btn" data-type="all">全部</button>
+            </div>
+        </div>
+    </div>
+</blockquote>
+<script type="text/html" id="toolbarDemo">
+    <div class="layui-btn-container">
+        <?php if(in_array('admin/Log/destroy',$ca_path_arr)){?>
+        <button class="layui-btn layui-btn-danger" data-url="{:url('Log/destroy')}" data-title="确定批量删除？"
+            lay-event="batchdel"><i class="layui-icon layui-icon-delete"></i>批量删除</button>
+        <?php }?>
+    </div>
+</script>
+<table id="dataTable" lay-filter="dataTable"></table>
+<script type="text/html" id="options">
+    <?php if(in_array('admin/Log/destroy',$ca_path_arr)){?>
+<a class="layui-btn layui-btn-danger layui-btn-xs" data-url="{:url('Log/destroy')}" data-title="确定删除？" lay-event="del"
+    data-table-id="dataTableId"><i class="layui-icon layui-icon-delete"></i>删除</a>
+<?php }?>
+</script>
+{/block} {block name="script"}
+<script>
+    layui.use(['common'], function () {
+        var common = layui.common;
+        common.table('{$title}', "{:url('Log/data')}", [
+            [{
+                type: "checkbox",
+                fixed: "left"
+            }, {
+                field: 'id',
+                title: '序号',
+                sort: true,
+                width: 80,
+                align: 'center',
+            }, {
+                field: "username",
+                title: "管理员",
+                align: 'center',
+                width: 100,
+            }, {
+                field: "ip",
+                title: "ip地址",
+                align: 'center',
+                width: 100,
+            }, {
+                field: "url",
+                title: "请求链接",
+                align: 'left',
+                minWidth: 200,
+            }, {
+                field: "method",
+                title: "请求类型",
+                align: 'center',
+                width: 100,
+            }, {
+                field: "remark",
+                title: "操作行为",
+                align: 'left',
+                minWidth: 200,
+            }, {
+                field: "create_time",
+                title: "创建时间",
+                align: 'center',
+                width: 160,
+            }, {
+                title: "操作",
+                width: 150,
+                align: "center",
+                fixed: "right",
+                toolbar: "#options"
+            }]
+        ], 230);
+        range('recog');
+    });
+</script>
+{/block}

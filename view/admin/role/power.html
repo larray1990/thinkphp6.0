@@ -1,0 +1,82 @@
+{extend name="../layouts/admin" /}
+{block name="content2"}
+<fieldset class="layui-elem-field layui-field-title">
+    <legend>角色名称：{$role_info.title}</legend>
+</fieldset>
+<div class="layui-fluid">
+    <div class="layui-card layui-row layui-col-space15">
+        <div class="layui-form layui-card-body layui-row">
+            <div class="col-xs-12">
+                <div class="layui-card">
+                    <table class="layui-table" lay-skin="nob">
+                        {foreach $auth_infoA as $k=>$v}
+                        <tr class="b-group">
+                            <td width="15%" class="left">
+                                <input lay-filter="allChoose" name="rules[]" title="{$v.title}" type="checkbox" {if
+                                    condition="in_array($v['id'],$role_info['rules'])" }checked{/if} class="ace par"
+                                    value="{$v.id}" />
+                            </td>
+                            <td class="ace1">
+                                {foreach auth_infoB as $k1=>$v1}
+                                {eq name="v.id" value="$v1.pid"}
+                                <table class="layui-table" lay-skin="nob">
+                                    <tr class="b-group2">
+                                        <td width="15%" class="left">
+                                            <input lay-filter="allChoose2" name="rules[]" title="{$v1.title}"
+                                                type="checkbox" {if condition="in_array($v1['id'],$role_info['rules'])"
+                                                }checked{/if} class="ace cld" value="{$v1.id}" />
+                                        </td>
+                                        <td>
+                                            {foreach auth_infoC as $k2=>$v2}
+                                            {eq name="v1.id" value="$v2.pid"}
+                                            <input name="rules[]" type="checkbox" title="{$v2.title}" {if
+                                                condition="in_array($v2['id'],$role_info['rules'])" }checked{/if} class="ace
+                                            cld2" value="{$v2.id}" />
+                                            {/eq}
+                                            {/foreach}
+                                        </td>
+                                    </tr>
+                                </table>
+                                {/eq}
+                                {/foreach}
+                            </td>
+                        </tr>
+                        {/foreach}
+                    </table>
+                </div>
+                <input type="hidden" name="id" value="{$role_info.id}">
+                <div class="layui-form-item layui-layer-btn-c">
+                    <label class="layui-form-label"></label>
+                    <div class="layui-input-block">
+                        <button class="layui-btn layui-layer-btn0" lay-submit="" lay-filter="demo">提交</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{/block}
+{block name="script"}
+<script>
+    layui.use(['form', 'common'], function () {
+        var $ = layui.$,
+            common = layui.common,
+            form = layui.form;
+        form.on('checkbox(allChoose)', function (data) {
+            var child = $(data.elem).parents('.b-group').find('input[type="checkbox"]');
+            child.each(function (index, item) {
+                item.checked = data.elem.checked;
+            });
+            form.render('checkbox');
+        });
+        form.on('checkbox(allChoose2)', function (data) {
+            var child = $(data.elem).parents('.b-group2').find('input[type="checkbox"]');
+            child.each(function (index, item) {
+                item.checked = data.elem.checked;
+            });
+            form.render('checkbox');
+        });
+        common.submit('demo', "{:url('role/power')}");
+    });
+</script>
+{/block}
