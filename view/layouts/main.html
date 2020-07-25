@@ -16,7 +16,13 @@
 </head>
 
 <body>
-    {block name="content"}{/block}
+    <div class="layui-fluid">
+        <div class="layui-card">
+            <div class="layui-card-body">
+                {block name="content"}{/block}
+            </div>
+        </div>
+    </div>
     <script type="text/javascript" src="__STATIC__/layui/layui.js"></script>
     <script>
         layui.config({

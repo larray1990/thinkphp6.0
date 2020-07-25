@@ -1,4 +1,4 @@
-{extend name="../layouts/admin" /} {block name="content2"}
+{extend name="../layouts/main" /} {block name="content"}
 <fieldset class="layui-elem-field layui-field-title">
     <legend>{$title}</legend>
 </fieldset>
@@ -101,7 +101,7 @@
                 fixed: "right",
                 toolbar: "#options"
             }]
-        ], 230);
+        ], 240);
         common.switch("status", "{:url('state')}");
     });
 </script>

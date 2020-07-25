@@ -1,4 +1,4 @@
-layui.define(['jquery', 'element', 'util', 'laytpl', 'layer', 'table', 'laydate', 'form', 'common'], function(exports) {
+layui.define(['jquery', 'element', 'util', 'laytpl', 'layer', 'table', 'laydate', 'form', 'common'], function (exports) {
     var navwidth = snavwidth = mnavwidth = tnavwidth = ismobile = '',
         navwidth = '230px',
         snavwidth = '60px',
@@ -13,7 +13,7 @@ layui.define(['jquery', 'element', 'util', 'laytpl', 'layer', 'table', 'laydate'
         layer = parent.layer === undefined ? layui.layer : top.layer,
         $body = $('body'),
         common = layui.common;
-    element.on('nav(layadmin-layout-left)', function(elem) {
+    element.on('nav(layadmin-layout-left)', function (elem) {
         var event = elem[0].getAttribute('layadmin-event');
         switch (event) {
             case 'flexible':
@@ -22,25 +22,45 @@ layui.define(['jquery', 'element', 'util', 'laytpl', 'layer', 'table', 'laydate'
                 if (ismobile) {
                     $('#LAY_app_body').width(document.body.clientWidth + 'px');
                     if ($('#LAY_app_flexible').hasClass('layui-icon-spread-left')) {
-                        $('#LAY_app').animate({ 'width': mnavwidth }, tnavwidth);
-                        $('#LAY_WRAP .layui-body').animate({ 'left': mnavwidth }, tnavwidth);
+                        $('#LAY_app').animate({
+                            'width': mnavwidth
+                        }, tnavwidth);
+                        $('#LAY_WRAP .layui-body').animate({
+                            'left': mnavwidth
+                        }, tnavwidth);
                         $('#mobilenav').removeClass('mobilenav')
                     } else {
-                        $('#LAY_app').animate({ 'width': navwidth }, tnavwidth);
-                        $('#LAY_WRAP .layui-body').animate({ 'left': navwidth }, tnavwidth);
+                        $('#LAY_app').animate({
+                            'width': navwidth
+                        }, tnavwidth);
+                        $('#LAY_WRAP .layui-body').animate({
+                            'left': navwidth
+                        }, tnavwidth);
                         $('#LAY_app').removeClass('layadmin-side-shrink');
                         $('#mobilenav').addClass('mobilenav')
                     }
                 } else {
                     if ($('#LAY_app_flexible').hasClass('layui-icon-spread-left')) {
-                        $('#LAY_app').animate({ 'width': snavwidth }, tnavwidth);
-                        $('#LAY_WRAP .layui-body').animate({ 'left': snavwidth }, tnavwidth);
-                        $('#LAY_app_tabs').animate({ 'left': 0 }, tnavwidth);
+                        $('#LAY_app').animate({
+                            'width': snavwidth
+                        }, tnavwidth);
+                        $('#LAY_WRAP .layui-body').animate({
+                            'left': snavwidth
+                        }, tnavwidth);
+                        $('#LAY_app_tabs').animate({
+                            'left': 0
+                        }, tnavwidth);
                         $('#LAY_app').addClass('layadmin-side-shrink');
                     } else {
-                        $('#LAY_app').animate({ 'width': navwidth }, tnavwidth);
-                        $('#LAY_WRAP .layui-body').animate({ 'left': navwidth }, tnavwidth);
-                        $('#LAY_app_tabs').animate({ 'left': 0 }, tnavwidth);
+                        $('#LAY_app').animate({
+                            'width': navwidth
+                        }, tnavwidth);
+                        $('#LAY_WRAP .layui-body').animate({
+                            'left': navwidth
+                        }, tnavwidth);
+                        $('#LAY_app_tabs').animate({
+                            'left': 0
+                        }, tnavwidth);
                         $('#LAY_app').removeClass('layadmin-side-shrink')
                     }
                 }
@@ -52,7 +72,7 @@ layui.define(['jquery', 'element', 'util', 'laytpl', 'layer', 'table', 'laydate'
                 break;
         }
     });
-    element.on('nav(layadmin-layout-right)', function(elem) {
+    element.on('nav(layadmin-layout-right)', function (elem) {
         var event = elem[0].getAttribute('layadmin-event');
         var href = elem[0].getAttribute('lay-href');
         switch (event) {
@@ -72,25 +92,25 @@ layui.define(['jquery', 'element', 'util', 'laytpl', 'layer', 'table', 'laydate'
                 }
                 break;
             case 'cache':
-                post(href, {}, function(res) {}, false);
+                post(href, {}, function (res) {}, false);
                 break;
             case 'password':
-                open('修改密码', href, '530px', '270px');
+                open('修改密码', href, '530px', '320px');
                 break;
             case 'info':
                 var e = ".layadmin-iframe";
                 $(e).attr('src', href);
                 break;
             case 'logout':
-                post(href, {}, function(res) {
-                    setTimeout(function() {
+                post(href, {}, function (res) {
+                    setTimeout(function () {
                         top.location.href = "/admin/login/index.html";
                     }, 2000);
                 }, true);
                 break;
         }
     });
-    element.on('nav(layadmin-pagetabs-nav)', function(elem) {
+    element.on('nav(layadmin-pagetabs-nav)', function (elem) {
         var event = elem[0].getAttribute('layadmin-event');
         switch (event) {
             case 'closeThisTabs':
@@ -103,7 +123,7 @@ layui.define(['jquery', 'element', 'util', 'laytpl', 'layer', 'table', 'laydate'
                     h = ".layui-body-layout",
                     b = "layadmin-tabsbody-item",
                     that = this;
-                a(z).each(function(e, t) {
+                a(z).each(function (e, t) {
                     e && e != document && (a(t).addClass(i), a(h).find("." + b).eq(e || 0)(e).addClass(i))
                 }), a("." + i).remove();
                 break;
@@ -117,7 +137,7 @@ layui.define(['jquery', 'element', 'util', 'laytpl', 'layer', 'table', 'laydate'
                 break;
         }
     });
-    $('.check-page').click(function() {
+    $('.check-page').click(function () {
         var event = $(this).attr('layadmin-event');
         switch (event) {
             case 'leftPage':
@@ -127,7 +147,7 @@ layui.define(['jquery', 'element', 'util', 'laytpl', 'layer', 'table', 'laydate'
                     s = parseFloat(t.css("left"));
                 if (!s && s <= 0) return;
                 var r = -s - n;
-                l.each(function(e, i) {
+                l.each(function (e, i) {
                     var l = a(i),
                         n = l.position().left;
                     if (n >= r) return t.css("left", -n), !1
@@ -138,7 +158,7 @@ layui.define(['jquery', 'element', 'util', 'laytpl', 'layer', 'table', 'laydate'
                     l = t.children("li"),
                     n = (t.prop("scrollWidth"), t.outerWidth()),
                     s = parseFloat(t.css("left"));
-                l.each(function(e, i) {
+                l.each(function (e, i) {
                     var l = $(i),
                         r = l.position().left;
                     if (r + l.outerWidth() >= n - s) return t.css("left", -r), !1
@@ -146,18 +166,20 @@ layui.define(['jquery', 'element', 'util', 'laytpl', 'layer', 'table', 'laydate'
                 break;
         }
     });
-    $(".layui-nav-left li").mouseover(function() {
+    $(".layui-nav-left li").mouseover(function () {
         if ($('#LAY_app_flexible').hasClass('layui-icon-spread-left')) {
             var that = this;
-            layer.tips($(this).find('cite').html(), that, { time: 0 });
+            layer.tips($(this).find('cite').html(), that, {
+                time: 0
+            });
         }
     });
-    $(".layui-nav-left li").mouseleave(function() {
+    $(".layui-nav-left li").mouseleave(function () {
         if ($('#LAY_app_flexible').hasClass('layui-icon-spread-left')) {
             layer.closeAll('tips');
         }
     });
-    element.on('nav(layui-nav-left)', function(elem) {
+    element.on('nav(layui-nav-left)', function (elem) {
         elem.parent().addClass("layui-nav-itemed");
         elem.next().find('a').eq(0).addClass("layui-this");
         $('.layadmin-iframe').attr('src', elem.next().find('a').eq(0).attr('lay-href'));
@@ -167,8 +189,12 @@ layui.define(['jquery', 'element', 'util', 'laytpl', 'layer', 'table', 'laydate'
             layer.closeAll('tips');
             $('#LAY_app_flexible').removeClass('layui-icon-spread-left');
             $('#LAY_app_flexible').addClass('layui-icon-spread-right');
-            $('#LAY_app').animate({ 'width': navwidth }, tnavwidth);
-            $('#LAY_WRAP .layui-body').animate({ 'left': navwidth }, tnavwidth);
+            $('#LAY_app').animate({
+                'width': navwidth
+            }, tnavwidth);
+            $('#LAY_WRAP .layui-body').animate({
+                'left': navwidth
+            }, tnavwidth);
             $('#LAY_app').removeClass('layadmin-side-shrink')
         }
         var event = elem.eq(0).attr('lay-href');
@@ -178,7 +204,7 @@ layui.define(['jquery', 'element', 'util', 'laytpl', 'layer', 'table', 'laydate'
             $(this).addClass('layui-this');
         }
     });
-    $('#setbgcolorshade').click(function() {
+    $('#setbgcolorshade').click(function () {
         $('#setbgcolor').css('display', 'none')
     });
 
@@ -194,7 +220,7 @@ layui.define(['jquery', 'element', 'util', 'laytpl', 'layer', 'table', 'laydate'
             $('#mobilenav').removeClass('mobilenav')
         }
     }
-    window.onresize = function() {
+    window.onresize = function () {
         ismobile = goPAGE();
         $('#mobilenav').removeClass('mobilenav');
         if (ismobile) {
@@ -202,8 +228,12 @@ layui.define(['jquery', 'element', 'util', 'laytpl', 'layer', 'table', 'laydate'
             if ($('#LAY_app_flexible').hasClass('layui-icon-shrink-right')) {
                 $('#LAY_app_flexible').removeClass('layui-icon-spread-right');
                 $('#LAY_app_flexible').addClass('layui-icon-spread-left');
-                $('#LAY_app').animate({ 'width': mnavwidth }, tnavwidth);
-                $('#LAY_WRAP .layui-body').animate({ 'left': mnavwidth }, tnavwidth);
+                $('#LAY_app').animate({
+                    'width': mnavwidth
+                }, tnavwidth);
+                $('#LAY_WRAP .layui-body').animate({
+                    'left': mnavwidth
+                }, tnavwidth);
                 $('#LAY_app').removeClass('layadmin-side-shrink');
                 $('#mobilenav').removeClass('mobilenav')
             }
@@ -212,27 +242,34 @@ layui.define(['jquery', 'element', 'util', 'laytpl', 'layer', 'table', 'laydate'
             if ($('#LAY_app_flexible').hasClass('layui-icon-shrink-right')) {
                 $('#LAY_app_flexible').removeClass('layui-icon-spread-left');
                 $('#LAY_app_flexible').addClass('layui-icon-spread-right');
-                $('#LAY_app').animate({ 'width': navwidth }, tnavwidth);
-                $('#LAY_WRAP .layui-body').animate({ 'left': navwidth }, tnavwidth);
+                $('#LAY_app').animate({
+                    'width': navwidth
+                }, tnavwidth);
+                $('#LAY_WRAP .layui-body').animate({
+                    'left': navwidth
+                }, tnavwidth);
                 $('#LAY_app').removeClass('layadmin-side-shrink')
             }
         }
     };
-
 
     function clearmobilenav() {
         $('#mobilenav').removeClass('mobilenav');
         if ($('#LAY_app_flexible').hasClass('layui-icon-shrink-right')) {
             $('#LAY_app_flexible').removeClass('layui-icon-spread-right');
             $('#LAY_app_flexible').addClass('layui-icon-spread-left');
-            $('#LAY_app').animate({ 'width': mnavwidth }, tnavwidth);
-            $('#LAY_WRAP .layui-body').animate({ 'left': mnavwidth }, tnavwidth);
+            $('#LAY_app').animate({
+                'width': mnavwidth
+            }, tnavwidth);
+            $('#LAY_WRAP .layui-body').animate({
+                'left': mnavwidth
+            }, tnavwidth);
             $('#LAY_app').removeClass('layadmin-side-shrink');
             $('#mobilenav').removeClass('mobilenav')
         }
     }
 
-    $('#ChangeColor li').click(function() {
+    $('#ChangeColor li').click(function () {
         $('#ChangeColor li').removeClass('layui-this');
         $(this).toggleClass('layui-this');
         var colorleve = parseInt($(this).attr('data-index'));
@@ -241,7 +278,7 @@ layui.define(['jquery', 'element', 'util', 'laytpl', 'layer', 'table', 'laydate'
     });
     if (getCookie("colorleve") != '') {
         var colorleve = (getCookie("colorleve"));
-        $.each($('#ChangeColor li'), function(v, k) {
+        $.each($('#ChangeColor li'), function (v, k) {
             if (v == colorleve) {
                 k.setAttribute('class', 'layui-this')
             }

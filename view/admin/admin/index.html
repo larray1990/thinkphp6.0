@@ -1,4 +1,4 @@
-{extend name="../layouts/admin" /} {block name="content2"}
+{extend name="../layouts/main" /} {block name="content"}
 <fieldset class="layui-elem-field layui-field-title">
     <legend>{$title}</legend>
 </fieldset>
@@ -33,6 +33,7 @@
             <div class="layui-inline">
                 <button class="layui-btn" data-type="search">搜索</button>
                 <button class="layui-btn" data-type="all">全部</button>
+                <!-- <button class="layui-btn" data-type="export_all" data-url="{:url('admin/data')}">导出</button> -->
             </div>
         </div>
     </div>
@@ -64,7 +65,7 @@
         <?php }?>
     </div>
 </script>
-<table id="dataTable" lay-filter="dataTable"></table>
+<table class="layui-table" id="dataTable" lay-filter="dataTable"></table>
 <script type="text/html" id="options">
     <?php if(in_array('admin/Admin/show',$ca_path_arr)){?>
 <a class="layui-btn layui-bg-cyan layui-btn-xs" data-url="{:url('Admin/show')}?id={{d.id}}" data-title="查看管理员"
@@ -76,9 +77,11 @@
     data-width="80%" data-height="70%" lay-event="edit" data-table-id="dataTableId"><i
         class="layui-icon layui-icon-edit"></i>编辑</a>
 <?php }?>
-<?php if(in_array('admin/Admin/destroy',$ca_path_arr)){?> {{# if(d.name != 'admin'){ }}
+<?php if(in_array('admin/Admin/destroy',$ca_path_arr)){?> 
+    {{# if(d.username != 'admin'){ }}
 <a class="layui-btn layui-btn-danger layui-btn-xs" data-title="确定删除？" data-url='{:url("Admin/destroy")}' lay-event="del"
-    data-table-id="dataTableId"><i class="layui-icon layui-icon-delete"></i>删除</a> {{# } }}
+    data-table-id="dataTableId"><i class="layui-icon layui-icon-delete"></i>删除</a> 
+    {{# } }}
 <?php }?>
 </script>
 {/block} {block name="script"}
@@ -176,7 +179,7 @@
                 fixed: 'right',
                 toolbar: "#options"
             }]
-        ], 250, function (res) {
+        ], 270, function (res) {
             $('#allmoney').html(res.all.all_money);
             $('#all_mum').html(res.all.all_num);
         });

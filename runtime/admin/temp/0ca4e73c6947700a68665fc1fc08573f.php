@@ -1,6 +1,28 @@
-{extend name="../layouts/main" /} {block name="content"}
+<?php /*a:2:{s:52:"D:\www\larray\team\basetp6\view\admin\log\index.html";i:1595392315;s:58:"D:\www\larray\team\basetp6\view\admin\..\layouts\main.html";i:1595390800;}*/ ?>
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title><?php echo htmlentities((isset($title) && ($title !== '')?$title:'后台管理平台')); ?></title>
+    <meta name="viewport"
+        content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no">
+    <link rel="stylesheet" href="/static/admin/layui/css/layui.css" media="all">
+    <link rel="stylesheet" href="/static/admin/css/common.css" media="all">
+    <!--[if lt IE 9]>
+    <script src="/static/admin/plugs/js/html5.min.js"></script>
+    <script src="/static/admin/plugs/js/respond.min.js"></script>
+    <![endif]-->
+     
+</head>
+
+<body>
+    <div class="layui-fluid">
+        <div class="layui-card">
+            <div class="layui-card-body">
+                
 <fieldset class="layui-elem-field layui-field-title">
-    <legend>{$title}</legend>
+    <legend><?php echo htmlentities($title); ?></legend>
 </fieldset>
 <blockquote class="layui-text">
     <div class="layui-form " lay-filter="dataTableId">
@@ -22,7 +44,7 @@
 <script type="text/html" id="toolbarDemo">
     <div class="layui-btn-container">
         <?php if(in_array('admin/Log/destroy',$ca_path_arr)){?>
-        <button class="layui-btn layui-btn-danger" data-url="{:url('Log/destroy')}" data-title="确定批量删除？"
+        <button class="layui-btn layui-btn-danger" data-url="<?php echo url('Log/destroy'); ?>" data-title="确定批量删除？"
             lay-event="batchdel"><i class="layui-icon layui-icon-delete"></i>批量删除</button>
         <?php }?>
     </div>
@@ -30,15 +52,33 @@
 <table id="dataTable" lay-filter="dataTable"></table>
 <script type="text/html" id="options">
     <?php if(in_array('admin/Log/destroy',$ca_path_arr)){?>
-<a class="layui-btn layui-btn-danger layui-btn-xs" data-url="{:url('Log/destroy')}" data-title="确定删除？" lay-event="del"
+<a class="layui-btn layui-btn-danger layui-btn-xs" data-url="<?php echo url('Log/destroy'); ?>" data-title="确定删除？" lay-event="del"
     data-table-id="dataTableId"><i class="layui-icon layui-icon-delete"></i>删除</a>
 <?php }?>
 </script>
-{/block} {block name="script"}
+
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript" src="/static/admin/layui/layui.js"></script>
+    <script>
+        layui.config({
+            base: "/static/admin/plugs/",
+        }).extend({ //设定组件别名 //主入口模块(名字同样根据自己的结构改动)
+            common: 'js/common',
+            index: 'js/index',
+            echarts: 'echarts/echarts',
+            echartsTheme: 'echarts/echartsTheme',
+            tinymceTextarea: 'tinymce/tinymceTextarea',
+            layarea: 'select/layarea',
+            iconPicker: 'iconPicker/iconPicker',
+        }).use(['common', 'index', 'echarts', 'echartsTheme', 'tinymceTextarea', 'layarea', 'iconPicker']);
+    </script>
+    
 <script>
     layui.use(['common'], function () {
         var common = layui.common;
-        common.table('{$title}', "{:url('Log/data')}", [
+        common.table('<?php echo htmlentities($title); ?>', "<?php echo url('Log/data'); ?>", [
             [{
                 type: "checkbox",
                 fixed: "left"
@@ -89,4 +129,7 @@
         range('recog');
     });
 </script>
-{/block}
+
+</body>
+
+</html>

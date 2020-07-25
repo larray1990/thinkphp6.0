@@ -16,6 +16,7 @@ use think\App;
 use think\facade\Db;
 use think\facade\Request;
 use think\facade\Log;
+use think\response\Json;
 use think\response\Redirect;
 
 class Admin extends AdminBase
@@ -409,10 +410,5 @@ class Admin extends AdminBase
                         <tr>    <td>实发工资</td><td>6800</td></tr>
                     </table>";
         sendEmail('809414504@qq.com', '工资条', '上师大', $message);
-    }
-
-    public function checkPQW($qwp){
-        return  $qwp;
-        return $this->request_param($hkl = '');
     }
 }

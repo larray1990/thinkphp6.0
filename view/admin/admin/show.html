@@ -1,15 +1,19 @@
-{extend name="../layouts/admin" /}
-{block name="content2"}
-<div class="layui-form" lay-filter="layuiadmin-form-admin" id="layuiadmin-form-admin" style="padding: 20px 0 0 0;">
+{extend name="../layouts/main" /}
+{block name="content"}
+<form class="layui-form" lay-filter="layuiadmin-form-admin" id="layuiadmin-form-admin" >
     <div class="layui-form-item">
         <label class="layui-form-label">账号：</label>
         <div class="layui-input-inline">
             <div class="layui-form-mid layui-word-aux">{$info.username}</div>
         </div>
+    </div>
+    <div class="layui-form-item">
         <label class="layui-form-label">姓名：</label>
         <div class="layui-input-inline">
             <div class="layui-form-mid layui-word-aux">{$info.fullname}</div>
         </div>
+    </div>
+    <div class="layui-form-item">
         <label class="layui-form-label">性别：</label>
         <div class="layui-input-inline">
             <div class="layui-form-mid layui-word-aux">{$info.sex}</div>
@@ -20,10 +24,14 @@
         <div class="layui-input-inline">
             <div class="layui-form-mid layui-word-aux">{$info.phone}</div>
         </div>
+    </div>
+    <div class="layui-form-item">
         <label class="layui-form-label">电子邮箱：</label>
         <div class="layui-input-inline">
             <div class="layui-form-mid layui-word-aux">{$info.email}</div>
         </div>
+    </div>
+    <div class="layui-form-item">
         <label class="layui-form-label">选择地区：</label>
         <div class="layui-input-inline">
             <div class="layui-form-mid layui-word-aux" style="width: 280px;">{$info.area}</div>
@@ -57,7 +65,8 @@
     <div class="layui-form-item layui-hide">
         <input type="button" lay-submit lay-filter="submit" id="submit" value="确认">
     </div>
-</div>
+</form>
+
 {/block}
 {block name="script"}
 

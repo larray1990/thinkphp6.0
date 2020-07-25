@@ -1,6 +1,7 @@
-<?php /*a:2:{s:54:"D:\www\larray\team\basetp6\view\admin\login\index.html";i:1587088962;s:59:"D:\www\larray\team\basetp6\view\admin\..\layouts\admin.html";i:1591586996;}*/ ?>
+<?php /*a:2:{s:54:"D:\www\larray\team\basetp6\view\admin\login\index.html";i:1587088962;s:59:"D:\www\larray\team\basetp6\view\admin\..\layouts\admin.html";i:1595390812;}*/ ?>
 <!DOCTYPE html>
 <html>
+
 <head>
     <meta charset="utf-8">
     <title><?php echo htmlentities((isset($title) && ($title !== '')?$title:'后台管理平台')); ?></title>
@@ -16,6 +17,7 @@
 <link rel="stylesheet" href="/static/admin/css/login.css" media="all">
 
 </head>
+
 <body>
     
 <div class="layui-login layui-display-show " id="LAY-user-login" style="display: none;">
@@ -65,13 +67,6 @@
     </div>
 </div>
 
-    <div class="layui-fluid">
-        <div class="layui-card">
-            <div class="layui-card-body">
-                
-            </div>
-        </div>
-    </div>
     <script type="text/javascript" src="/static/admin/layui/layui.js"></script>
     <script>
         layui.config({
@@ -84,7 +79,7 @@
             tinymceTextarea: 'tinymce/tinymceTextarea',
             layarea: 'select/layarea',
             iconPicker: 'iconPicker/iconPicker',
-        }).use(['common', 'index', 'echarts', 'echartsTheme', 'tinymceTextarea', 'layarea','iconPicker']);
+        }).use(['common', 'index', 'echarts', 'echartsTheme', 'tinymceTextarea', 'layarea', 'iconPicker']);
     </script>
     
 <script>
@@ -104,6 +99,6 @@
     if (top.location != self.location) top.location = self.location;
 </script>
 
-    {}{}
 </body>
+
 </html>

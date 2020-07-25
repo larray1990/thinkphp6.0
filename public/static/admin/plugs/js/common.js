@@ -297,7 +297,6 @@ layui.define(['laydate', 'form', 'layer', 'table', 'laytpl', 'jquery', 'upload',
      */
     $body.on('click', '[data-upload-url]', function () {
         var url = $(this).attr('data-upload-url');
-        console.log(url);
         var img = new Image();
         img.src = url;
         var width = img.width + 'px';
@@ -360,7 +359,21 @@ layui.define(['laydate', 'form', 'layer', 'table', 'laytpl', 'jquery', 'upload',
                 var whereData = form.val(obj.config.id);
                 whereData.type = 1;
                 post(obj.config.url, whereData, function (res) {
-                    table.exportFile(obj.config.id, res.data, 'xls');
+                    var data=res.data;
+                        layui.each(data, function (ks, vs) {
+                            var inner = {}
+                            layui.each(vs, function (k, v) {
+                                if (/^\d{9,}$/.test(v)) {
+                                    vs[k] = vs[k] + '\t'
+                                }
+                                if (k.indexOf('_time')>=0) {
+                                    vs[k] = vs[k] + '\t'
+                                }
+                                inner[k] = vs[k]
+                            });
+                            data[ks] = inner
+                        });
+                    table.exportFile(obj.config.id, data, 'xls');
                 }, true);
                 break;
             case 'reload':
@@ -609,6 +622,28 @@ layui.define(['laydate', 'form', 'layer', 'table', 'laytpl', 'jquery', 'upload',
                         where: form.val(elem + 'Id', myform),
                     });
                 },
+                export_all: function () {
+                    var whereData = form.val(elem + 'Id');
+                    whereData.type = 1;
+                    var url = $(this).attr('data-url');
+                    post(url, whereData, function (res) {
+                        var data=res.data;
+                        layui.each(data, function (ks, vs) {
+                            var inner = {}
+                            layui.each(vs, function (k, v) {
+                                if (/^\d{9,}$/.test(v)) {
+                                    vs[k] = vs[k] + '\t'
+                                }
+                                if (k.indexOf('_time')>=0) {
+                                    vs[k] = vs[k] + '\t'
+                                }
+                                inner[k] = vs[k]
+                            });
+                            data[ks] = inner
+                        });
+                        table.exportFile(elem + 'Id', data, 'xls');
+                   }, true);
+                }
             };
             //点击搜索
             $('.layui-btn').on('click', function () {

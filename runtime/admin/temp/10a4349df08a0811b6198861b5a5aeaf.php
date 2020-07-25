@@ -1,6 +1,7 @@
-<?php /*a:2:{s:56:"D:\www\larray\team\basetp6\view\admin\index\welcome.html";i:1591233422;s:59:"D:\www\larray\team\basetp6\view\admin\..\layouts\admin.html";i:1591586996;}*/ ?>
+<?php /*a:2:{s:56:"D:\www\larray\team\basetp6\view\admin\index\welcome.html";i:1595390867;s:59:"D:\www\larray\team\basetp6\view\admin\..\layouts\admin.html";i:1595390812;}*/ ?>
 <!DOCTYPE html>
 <html>
+
 <head>
     <meta charset="utf-8">
     <title><?php echo htmlentities((isset($title) && ($title !== '')?$title:'后台管理平台')); ?></title>
@@ -14,6 +15,7 @@
     <![endif]-->
      
 </head>
+
 <body>
     
 <style>
@@ -182,17 +184,15 @@
                 </div>
             </div>
         </div>
-        <img src="<?php echo url('index/qrcode'); ?>" alt="这是一个二维码" />
+        <img src="<?php echo url('index/qrcode'); ?>" alt="这是一个二维码" height="220px" />
+        <img src="<?php echo url('index/qrcode'); ?>" alt="这是一个二维码" height="220px" />
+        <img src="<?php echo url('index/qrcode'); ?>" alt="这是一个二维码" height="220px" />
+        <img src="<?php echo url('index/qrcode'); ?>" alt="这是一个二维码" height="220px" />
+        <img src="<?php echo url('index/qrcode'); ?>" alt="这是一个二维码" height="220px" />
+        <img src="<?php echo url('index/qrcode'); ?>" alt="这是一个二维码" height="220px" />
     </div>
 </div>
 
-    <div class="layui-fluid">
-        <div class="layui-card">
-            <div class="layui-card-body">
-                
-            </div>
-        </div>
-    </div>
     <script type="text/javascript" src="/static/admin/layui/layui.js"></script>
     <script>
         layui.config({
@@ -205,7 +205,7 @@
             tinymceTextarea: 'tinymce/tinymceTextarea',
             layarea: 'select/layarea',
             iconPicker: 'iconPicker/iconPicker',
-        }).use(['common', 'index', 'echarts', 'echartsTheme', 'tinymceTextarea', 'layarea','iconPicker']);
+        }).use(['common', 'index', 'echarts', 'echartsTheme', 'tinymceTextarea', 'layarea', 'iconPicker']);
     </script>
     
 <script>
@@ -234,6 +234,6 @@
     });
 </script>
 
-    {}{}
 </body>
+
 </html>
